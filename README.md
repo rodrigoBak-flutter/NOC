@@ -26,6 +26,9 @@ npx tsc --init --outDir dist/ --rootDir src
 ```
 npm i cron  = https://www.npmjs.com/package/cron
 
+Sirve para crear rapidamente un CRUD de prueba en local
+npm i json-server = https://www.npmjs.com/package/json-server
+
 ```
 
 
