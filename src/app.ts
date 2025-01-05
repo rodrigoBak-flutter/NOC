@@ -1,5 +1,15 @@
+import { Server } from "./presentation/server";
 
 
-export const message:string = 'Hello World!!';
 
-console.log(message);
+
+
+(async () => {
+    main()
+ })();
+
+
+
+function main() {
+    Server.start();
+}
