@@ -1,6 +1,13 @@
 import { CronService } from "./cron/cron_service";
 import { CheckService } from "../domain/use-cases/checks/check_service";
+import { LogRepositoryImpl } from "../infrastructure/repositories/log.repository.impl";
+import { FileSystemDataSource } from "../infrastructure/datasource/file-system.datasource";
 
+
+
+const fileSystemLogRepository = new LogRepositoryImpl(
+  new FileSystemDataSource(),
+);
 
 export class Server {
 
@@ -11,18 +18,16 @@ export class Server {
     CronService.ceateCronJob('*/5 * * * * *', () => {
       // const date = new Date();
       // console.log(`five seconds ${date}`);
-      const url = 'https://www.google.com';
+      //const url = 'https://www.google.com';
+      const url = 'http://localhost:3001/posts';
       new CheckService(
-        () => {
-          console.log(`${url} is ok`);
-        },
-        (error) => {
-          console.error(`Error: ${error}`);
-        }
-      ).execute(`${url}`);
-      // new CheckService().execute('http://localhost:3001/posts');
-    });
+        fileSystemLogRepository,
+        () => console.log(`Service ${url} is ok`),
+        (error) => console.error(`Error: ${error}`),
 
+      ).execute(`${url}`);
+       
+    });
   }
 }
 
